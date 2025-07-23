@@ -1,7 +1,7 @@
 // FileUploader.tsx
 import React, {useCallback} from 'react'
 import {useDropzone} from "react-dropzone";
-import {formatSize} from "~/utils/utils";
+import {formatSize} from "~/utils";
 
 
 interface FileUploaderProps {
