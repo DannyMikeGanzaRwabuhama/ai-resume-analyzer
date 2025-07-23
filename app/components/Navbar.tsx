@@ -5,11 +5,6 @@ import { usePuterStore } from "../../lib/puter";
 const Navbar = () => {
     const { auth } = usePuterStore();
 
-    const handleLogout = async () => {
-        await auth.signOut();
-        window.location.href = "/auth";
-    };
-
     return (
         <nav className={'navbar'}>
             <Link to={"/"}>
@@ -18,11 +13,6 @@ const Navbar = () => {
             <Link to={"/upload"} className={"primary-button w-fit"}>
                 Upload Resume
             </Link>
-            {auth.isAuthenticated && (
-                <button onClick={handleLogout} className="secondary-button w-fit ml-4 cursor-pointer">
-                    Logout
-                </button>
-            )}
         </nav>
     )
 }
