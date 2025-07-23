@@ -1,10 +1,7 @@
 import React from 'react'
 import {Link} from "react-router";
-import { usePuterStore } from "../../lib/puter";
 
 const Navbar = () => {
-    const { auth } = usePuterStore();
-
     return (
         <nav className={'navbar'}>
             <Link to={"/"}>

@@ -5,7 +5,7 @@ import toast, {Toaster} from 'react-hot-toast';
 import {usePuterStore} from "../../lib/puter";
 import {useNavigate} from "react-router";
 import {convertPdfToImage} from "../../lib/pdf2Image";
-import {generateUID} from "~/utils";
+import {generateUUID} from "~/utils";
 import {prepareInstructions} from "../../constants";
 
 type analyzeResumeProps = {
@@ -16,7 +16,7 @@ type analyzeResumeProps = {
 }
 
 const Upload = () => {
-    const {auth, isLoading, fs, ai, kv} = usePuterStore();
+    const {fs, ai, kv} = usePuterStore();
     const navigate = useNavigate();
     const [processing, setProcessing] = useState(false);
     const [file, setFile] = useState<File | null>(null);
@@ -61,7 +61,7 @@ const Upload = () => {
             }
 
             setStatusText('Analyzing resume...');
-            const uuid = generateUID();
+            const uuid = generateUUID();
             const data = {
                 id: uuid,
                 resumePath: uploadedFile.path,

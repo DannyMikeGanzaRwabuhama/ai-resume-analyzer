@@ -13,15 +13,14 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-    const {kv, auth} = usePuterStore();
+    const {kv, auth, isLoading} = usePuterStore();
     const navigate = useNavigate();
-    const [resumeUrl, setResumeUrl] = useState('');
     const [resumes, setResumes] = useState<Resume[]>([]);
     const [loadingResumes, setLoadingResumes] = useState(false);
 
     useEffect(() => {
-        if (!auth.isAuthenticated) navigate('/auth/?next=/');
-    }, [auth.isAuthenticated]);
+        if (!isLoading && !auth.isAuthenticated) navigate('/auth/?next=/');
+    }, [auth.isAuthenticated, isLoading]);
 
     useEffect(() => {
         const loadResumes = async () => {
@@ -32,8 +31,6 @@ export default function Home() {
             const parsedResumes = storedResumes.map(item => (
                 JSON.parse(item.value) as Resume
             ))
-
-            console.log("Parsed Resumes:", parsedResumes);
 
             setResumes(parsedResumes || []);
             setLoadingResumes(false);
