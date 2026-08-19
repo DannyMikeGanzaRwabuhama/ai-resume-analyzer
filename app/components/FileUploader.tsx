@@ -1,4 +1,3 @@
-// FileUploader.tsx
 import React, {useCallback} from 'react'
 import {useDropzone} from "react-dropzone";
 import {formatSize} from "~/utils";
@@ -31,16 +30,18 @@ const FileUploader = ({onFileSelect, selectedFile}: FileUploaderProps) => {
             <div
                 {...getRootProps()}
                 className={`
-                    p-6 rounded-2xl text-center transition-all duration-300 ease-in-out
-                    ${isDragActive ? 'border-2 border-dashed border-blue-500 bg-blue-50' : 'border border-gray-300'}
+                    p-4 rounded-2xl text-center transition-all duration-300 ease-in-out inset-shadow focus:outline-none
+                    ${isDragActive ? 'border-2 border-dashed border-blue-500 bg-blue-50' : 'bg-white'}
                     ${fileToDisplay ? 'cursor-default' : 'cursor-pointer'}
                 `}
             >
                 <input {...getInputProps()} />
 
                 {isDragActive && (
-                    <div className="absolute inset-0 bg-blue-300 bg-opacity-50 flex flex-col items-center justify-center rounded-2xl z-10 custom-fade-in">                        <svg
-                            className="w-20 h-20 text-white mb-4 custom-bounce-y" // Changed here
+                    <div
+                        className="absolute inset-0 bg-blue-300 bg-opacity-50 flex flex-col items-center justify-center rounded-2xl z-10 custom-fade-in">
+                        <svg
+                            className="w-20 h-20 text-white mb-4 custom-bounce-y"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -58,11 +59,12 @@ const FileUploader = ({onFileSelect, selectedFile}: FileUploaderProps) => {
                     </div>
                 )}
 
-                <div className={'space-y-4'}>
+                <div className={'space-y-2'}>
                     {fileToDisplay ? (
-                        <div className={'uploader-selected-file flex items-center justify-between p-3 bg-gray-50 rounded-2xl'}>
+                        <div
+                            className={'uploader-selected-file flex items-center justify-between rounded-2xl'}>
                             <img src={'/images/pdf.png'} alt={'pdf'} className={'size-10'}/>
-                            <div className="flex-1 ml-4 overflow-hidden">
+                            <div className="flex flex-col items-center space-y-1 ml-4 overflow-hidden">
                                 <p className={'text-sm font-medium text-gray-700 truncate max-w-[200px]'}>{fileToDisplay.name}</p>
                                 <p className="text-sm text-gray-500">{formatSize(fileToDisplay.size)}</p>
                             </div>

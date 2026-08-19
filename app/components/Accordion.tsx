@@ -67,7 +67,6 @@ interface AccordionItemProps {
 }
 
 export const AccordionItem: React.FC<AccordionItemProps> = ({
-                                                                id,
                                                                 children,
                                                                 className = "",
                                                             }) => {

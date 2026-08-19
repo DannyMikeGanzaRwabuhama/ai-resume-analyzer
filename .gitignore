@@ -1,8 +1,13 @@
-.DS_Store
-/node_modules/
-
-# React Router
-/.react-router/
-/build/
+.DS_Store
+
+/node_modules/
+
+
+
+# React Router
+
+/.react-router/
+
+/build/
+
 config.bat
-.env

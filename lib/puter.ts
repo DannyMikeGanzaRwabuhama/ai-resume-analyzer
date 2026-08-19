@@ -334,7 +334,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
             return;
         }
 
-        return puter.ai.chat(
+        return await puter.ai.chat(
             [
                 {
                     role: "user",
@@ -350,7 +350,8 @@ export const usePuterStore = create<PuterStore>((set, get) => {
                     ],
                 },
             ],
-            {model: "claude-sonnet-4"}
+            {model: "claude-sonnet-4"},
+            true
         ) as Promise<AIResponse | undefined>;
     };
 

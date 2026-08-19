@@ -1,4 +1,4 @@
-import React, {type FormEvent, useState} from 'react';
+import React, {type FormEvent, useEffect, useState} from 'react';
 import Navbar from "~/components/Navbar";
 import FileUploader from "~/components/FileUploader";
 import toast, {Toaster} from 'react-hot-toast';
@@ -7,20 +7,32 @@ import {useNavigate} from "react-router";
 import {convertPdfToImage} from "../../lib/pdf2Image";
 import {generateUUID} from "~/utils";
 import {prepareInstructions} from "../../constants";
+import type {Route} from "../../.react-router/types/app/routes/+types/upload";
 
-type analyzeResumeProps = {
+type AnalyzeResumeProps = {
     companyName: string;
     jobTitle: string;
     jobDescription: string;
     file: File;
 }
 
+export function meta({}: Route.MetaArgs) {
+    return [
+        {title: "Upload | Resume-analyzer.ai"},
+        {name: "description", content: "Upload your resume for AI powered feedback!"},
+    ]
+}
+
 const Upload = () => {
-    const {fs, ai, kv} = usePuterStore();
+    const {fs, ai, kv, auth, isLoading} = usePuterStore();
     const navigate = useNavigate();
     const [processing, setProcessing] = useState(false);
     const [file, setFile] = useState<File | null>(null);
     const [statusText, setStatusText] = useState(''); // State to manage status text
+
+    useEffect(() => {
+        if (!isLoading && !auth.isAuthenticated) navigate('/auth/?next=/upload');
+    }, [auth.isAuthenticated, isLoading]);
 
     // No need for a separate error state if react-hot-toast handles it,
     // as toast.error() directly triggers the notification.
@@ -31,7 +43,7 @@ const Upload = () => {
         // However, toast notifications usually disappear on their own or are dismissed by user.
     }
 
-    const handleAnalyze = async ({companyName, jobTitle, jobDescription, file}: analyzeResumeProps) => {
+    const handleAnalyze = async ({companyName, jobTitle, jobDescription, file}: AnalyzeResumeProps) => {
         // Initial state setup for processing feedback
         setProcessing(true);
         setStatusText('Uploading your resume...');
@@ -97,8 +109,6 @@ const Upload = () => {
             // Set a timeout before redirection
             await new Promise(resolve => setTimeout(resolve, 2000)); // Wait for 2 seconds (2000 milliseconds)
 
-            console.log(data);
-            // Redirect to the resume details page
             navigate(`/resume/${uuid}`);
 
         } catch (error) {
@@ -110,7 +120,7 @@ const Upload = () => {
         } finally {
             // Ensure processing state is reset regardless of success or failure
             setProcessing(false);
-            // Optionally dismiss the loading toast if it's still there and you didn't auto-dismiss it with success/error toast
+            // Optionally dismiss the loading toast if it's still there, and you didn't auto-dismiss it with success/error toast
             // toast.dismiss(); // Use this if you want to explicitly clear all toasts at the end
         }
     }

@@ -38,7 +38,7 @@ const Category = ({title, score}: { title: string; score: number }) => {
                     <p className="text-2xl">{title}</p>
                     <ScoreBadge score={score}/>
                 </div>
-                <p className="text-2xl ">
+                <p className="text-2xl">
                     <span className={textColor}>{score}</span>/100
                 </p>
             </div>
